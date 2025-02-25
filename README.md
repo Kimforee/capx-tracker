@@ -99,99 +99,130 @@ python manage.py runserver
 
 Your Django application is now available at `http://localhost:8000`.
 
-## One-Click Deploy
+# CapX Django Backend  
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+This is the backend for **CapX**, a stock portfolio management application built using **Django** and **Django REST Framework (DRF)**. It provides APIs to fetch stock data, manage user portfolios, and integrate with a stock price API.
+---
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+## Features  
+
+- 📡 **RESTful API** to fetch stock data  
+- 🔒 **User authentication** for secure access  
+- 📈 **Stock portfolio management**  
+- 🌐 **Fetch real-time stock data** from external APIs  
+- 🗄️ **PostgreSQL database for production** (SQLite for local development)  
+
+---
+
+## Installation  
+
+### Clone the repository  
+
+```sh
+git clone https://github.com/your-username/capx-tracker.git
+cd capx-tracker
+```
+
+### Set up a virtual environment  
+
+```sh
+python -m venv venv
+source venv/bin/activate   # On Windows use: venv\Scripts\activate
+```
+
+### Install dependencies  
+
+```sh
+pip install -r requirements.txt
+```
+
+### Set up environment variables  
+
+Create a `.env` file in the project root and add the required settings:  
 
 ```
-capx-tracker
-├─ .git
-│  ├─ config
-│  ├─ description
-│  ├─ FETCH_HEAD
-│  ├─ HEAD
-│  ├─ hooks
-│  │  ├─ applypatch-msg.sample
-│  │  ├─ commit-msg.sample
-│  │  ├─ fsmonitor-watchman.sample
-│  │  ├─ post-update.sample
-│  │  ├─ pre-applypatch.sample
-│  │  ├─ pre-commit.sample
-│  │  ├─ pre-merge-commit.sample
-│  │  ├─ pre-push.sample
-│  │  ├─ pre-rebase.sample
-│  │  ├─ pre-receive.sample
-│  │  ├─ prepare-commit-msg.sample
-│  │  ├─ push-to-checkout.sample
-│  │  ├─ sendemail-validate.sample
-│  │  └─ update.sample
-│  ├─ index
-│  ├─ info
-│  │  └─ exclude
-│  ├─ logs
-│  │  ├─ HEAD
-│  │  └─ refs
-│  │     ├─ heads
-│  │     │  └─ main
-│  │     └─ remotes
-│  │        └─ origin
-│  │           └─ HEAD
-│  ├─ objects
-│  │  ├─ info
-│  │  └─ pack
-│  │     ├─ pack-8c46be9a4f737e26f3dee62dd24050ec2e702bad.idx
-│  │     ├─ pack-8c46be9a4f737e26f3dee62dd24050ec2e702bad.pack
-│  │     └─ pack-8c46be9a4f737e26f3dee62dd24050ec2e702bad.rev
-│  ├─ packed-refs
-│  └─ refs
-│     ├─ heads
-│     │  └─ main
-│     ├─ remotes
-│     │  └─ origin
-│     │     └─ HEAD
-│     └─ tags
-├─ .gitignore
-├─ accounts
-│  ├─ admin.py
-│  ├─ apps.py
-│  ├─ migrations
-│  │  └─ __init__.py
-│  ├─ models.py
-│  ├─ tests.py
-│  ├─ urls.py
-│  ├─ views.py
-│  └─ __init__.py
-├─ api
-│  ├─ asgi.py
-│  ├─ settings.py
-│  ├─ urls.py
-│  ├─ wsgi.py
-│  └─ __init__.py
-├─ example
-│  ├─ admin.py
-│  ├─ apps.py
-│  ├─ urls.py
-│  ├─ views.py
-│  └─ __init__.py
-├─ manage.py
-├─ README.md
-├─ requirements.txt
-├─ stocks
-│  ├─ admin.py
-│  ├─ apps.py
-│  ├─ migrations
-│  │  ├─ 0001_initial.py
-│  │  ├─ 0002_stock_user.py
-│  │  └─ __init__.py
-│  ├─ models.py
-│  ├─ serializers.py
-│  ├─ tests.py
-│  ├─ urls.py
-│  ├─ utils.py
-│  ├─ views.py
-│  └─ __init__.py
-└─ vercel.json
-
+SECRET_KEY=your-secret-key
+DEBUG=True
+ALLOWED_HOSTS=*
+DATABASE_URL=postgresql://username:password@host:port/database
 ```
+
+---
+
+##  Database Setup  
+
+### Apply migrations  
+
+```sh
+python manage.py migrate
+```
+
+### Create a superuser  
+
+```sh
+python manage.py createsuperuser
+```
+
+Follow the prompts to set up an admin account.
+
+---
+
+##  Running the Server  
+
+```sh
+python manage.py runserver
+```
+
+The API will be available at:  
+`http://127.0.0.1:8000/api`  
+
+---
+
+## Deployment Notes  
+
+If the deployed backend shows **"Invalid Credentials"** even after login, update the database settings in `settings.py`:  
+
+### **For local development (using SQLite)**  
+
+Uncomment the SQLite database settings and comment out the PostgreSQL settings:  
+
+```python
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+```
+
+Then, restart the server:  
+
+```sh
+python manage.py runserver
+```
+
+---
+
+## API Endpoints  
+
+| Method | Endpoint               | Description                |
+|--------|------------------------|----------------------------|
+| GET    | `/api/stocks/random/`  | Fetch random stock data   |
+| POST   | `/api/portfolio/add/`  | Add a stock to portfolio  |
+| GET    | `/api/portfolio/`      | View user's portfolio     |
+
+---
+
+## Troubleshooting  
+
+- **"Invalid credentials" error?** Switch to SQLite locally and restart the server.  
+- **Database errors?** Ensure PostgreSQL is running and the `DATABASE_URL` is correctly set.  
+- **Stock API not fetching data?** Check if the external stock API has reached its request limit.  
+
+---
+
+## 📄 License  
+
+This project is licensed under the **MIT License**.  
+
+---
